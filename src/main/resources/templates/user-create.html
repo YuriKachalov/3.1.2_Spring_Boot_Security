@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h2>Заполните поля:</h2>
+<form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
+    <label for="name">Name</label>
+    <input type="text" th:field="*{name}" id="name">
+    <label for="surname">Surname</label>
+    <input type="text" th:field="*{surname}" id="surname">
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age">
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password">
+<!--    <label for="role">Role</label>-->
+<!--    <input type="text" th:field="*{role.role}" id="role">-->
+    <input type="submit" value="Create User">
+</form>
+</body>
+</html>
