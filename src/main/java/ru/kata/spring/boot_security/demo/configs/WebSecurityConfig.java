@@ -9,30 +9,34 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.services.UserssDetailsService;
+import ru.kata.spring.boot_security.demo.services.UserServiceImp;
+//import ru.kata.spring.boot_security.demo.services.UserssDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private final UserssDetailsService userssDetailsService;
+    private final UserServiceImp userssDetailsService;
+    private final PasswordEncoderConfig passwordEncoderConfig;
 
     @Autowired
-    public WebSecurityConfig(UserssDetailsService userssDetailsService, SuccessUserHandler successUserHandler) {
+    public WebSecurityConfig(UserServiceImp userssDetailsService, SuccessUserHandler successUserHandler, PasswordEncoderConfig passwordEncoderConfig) {
         this.userssDetailsService = userssDetailsService;
         this.successUserHandler = successUserHandler;
+        this.passwordEncoderConfig = passwordEncoderConfig;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userssDetailsService)
-                .passwordEncoder(getPasswordEncoder());
+        auth
+                .userDetailsService(userssDetailsService)
+                .passwordEncoder(passwordEncoderConfig.getPasswordEncoder());
     }
 
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder getPasswordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

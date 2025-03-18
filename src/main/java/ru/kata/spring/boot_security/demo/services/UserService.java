@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.services;
 
 
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface UserService {
     void deleteUser(int id);
 
     //    изменять пользователя
-    void saveUser(User user);
+    void saveUser(User user, List<Role> roles);
 
     List<User> listUsers();
 
@@ -19,4 +20,14 @@ public interface UserService {
     User getUserId(Integer id);
 
     User getUserByName(String userName);
+
+    //методы для Role
+    List<Role> listRoles();
+
+    public Role saveRole(Role role);
+
+    public List<Role> findRolesByIds(List<Integer> roleIds);
 }
+//    Role getRoleId(List <Integer> roles);
+//Role getRoleByName(String userName);
+

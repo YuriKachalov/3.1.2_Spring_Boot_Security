@@ -9,14 +9,21 @@
 <form action="#" th:action="@{/user-create}" th:object="${user}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name">
+
     <label for="surname">Surname</label>
     <input type="text" th:field="*{surname}" id="surname">
+
     <label for="age">Age</label>
     <input type="text" th:field="*{age}" id="age">
+
     <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password">
-<!--    <label for="role">Role</label>-->
-<!--    <input type="text" th:field="*{role.role}" id="role">-->
+    <input type="text" th:field="*{passwordUser}" id="password">
+
+    <label for="role">Role</label>
+    <div th:each="role : ${roles}">
+        <input type="checkbox" th:value="${role.id}" th:name="roles" />
+        <span th:text="${role.role}"></span>
+    </div>
     <input type="submit" value="Create User">
 </form>
 </body>

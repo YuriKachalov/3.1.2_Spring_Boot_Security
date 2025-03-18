@@ -10,18 +10,23 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String role;
 
     @Transient
     @ManyToMany(mappedBy = "roleSet")
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<User> userSet;
 
     public Role() {
     }
 
-    public Role(int id, String role) {
-        this.id = id;
+    public Role(String role) {
         this.role = role;
     }
 
