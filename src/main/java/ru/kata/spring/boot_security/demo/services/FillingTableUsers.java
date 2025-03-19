@@ -12,21 +12,13 @@ import java.util.List;
 
 @Service
 public class FillingTableUsers implements ServletContextListener {
-
     private final UserService userService;
 
     public FillingTableUsers(UserService userService) {
         this.userService = userService;
     }
 
-//    @PostConstruct
-//    public void init() {
-//        fillingTableUsers();
-//    }
-
-
     public void fillingTableUsers() {
-
         List<Role> rolesAdmin = new ArrayList<>();
         rolesAdmin.add(new Role("ROLE_ADMIN"));
         userService.saveUser(new User("admin", "admin"), rolesAdmin);
@@ -41,5 +33,4 @@ public class FillingTableUsers implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         fillingTableUsers();
     }
-
 }

@@ -19,6 +19,7 @@ public class User implements UserDetails {
     private String name;
     private String surname;
     private int age;
+
     @Column(name = "password")
     private String passwordUser;
 
@@ -29,7 +30,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roleSet;
-
 
 
     public User() {
@@ -87,7 +87,8 @@ public class User implements UserDetails {
     public void setRoleSet(Set<Role> roleSet) {
         this.roleSet = roleSet;
     }
-//методы UserDetails
+
+    //методы UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoleSet();
@@ -122,10 +123,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-//    public User getUser() {
-//        return user;
-//    }
 
     @Override
     public String toString() {

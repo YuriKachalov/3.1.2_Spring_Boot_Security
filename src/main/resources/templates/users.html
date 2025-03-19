@@ -16,7 +16,7 @@
                 <th>Name</th>
                 <th>Surname</th>
                 <th>Age</th>
-                <th>Password</th>
+                <th>Roles</th>
                 <th>Optional</th>
             </tr>
             </thead>
@@ -26,7 +26,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.surname}"></td>
                 <td th:text="${user.age}"></td>
-                <td th:text="${user.passwordUser}"></td>
+                <td th:text="${user.roleSet}"></td>
                 <td><a th:href="@{/user-update(id=${user.id})}">Update</a></td>
                 <td><a th:href="@{/user-delete(id=${user.id})}">Delete</a></td>
             </tr>

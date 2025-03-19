@@ -25,6 +25,12 @@
     <input type="password" th:field="*{passwordUser}" id="password">
     <br style="margin-bottom: 10px;">
     <br/>
+    <label for="role">Role</label>
+    <select th:name="roles" multiple>
+        <option th:each="role : ${roles}"
+                th:value="${role.id}"
+                th:text="${role.role}"></option>
+    </select>
     <input type="submit" value="Update User">
 </form>
 </body>

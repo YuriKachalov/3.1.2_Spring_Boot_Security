@@ -10,22 +10,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repositories.RoleRepositori;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImp implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepositori roleRepositori;
+    private final RolesService rolesService;
 
     @Autowired
-    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepositori roleRepositori) {
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder, RolesService rolesService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepositori = roleRepositori;
+        this.rolesService = rolesService;
     }
 
     @Override
@@ -48,38 +50,20 @@ public class UserServiceImp implements UserService, UserDetailsService {
             if (user.getPasswordUser() != null && !user.getPasswordUser().isEmpty()) {
                 existingUser.setPasswordUser(passwordEncoder.encode(user.getPasswordUser()));
             }
-
             Set<Role> existingRoles = new HashSet<>();
             for (Role role : roles) {
-                existingRoles.add(saveRole(role));
+                existingRoles.add(rolesService.saveRole(role));
             }
             existingUser.setRoleSet(existingRoles);
-
             userRepository.save(existingUser);
         } else {
             user.setPasswordUser(passwordEncoder.encode(user.getPasswordUser()));
             Set<Role> roleSet = new HashSet<>();
             for (Role role : roles) {
-                roleSet.add(saveRole(role));
+                roleSet.add(rolesService.saveRole(role));
             }
             user.setRoleSet(roleSet);
-
             userRepository.save(user);
-        }
-    }
-
-
-    @Override
-    @Transactional
-    public Role saveRole(Role role) {
-        Optional<Role> existingRoleOpt = roleRepositori.findById(role.getId());
-
-        if (existingRoleOpt.isPresent()) {
-            Role existingRole = existingRoleOpt.get();
-            existingRole.setRole(role.getRole());
-             return roleRepositori.save(role);
-        } else {
-            return roleRepositori.save(role);
         }
     }
 
@@ -109,20 +93,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
         }
         return user;
     }
-
-    @Override
-    @Transactional
-    public List<Role> listRoles() {
-        return roleRepositori.findAll();
-    }
-
-    @Override
-    @Transactional
-    public List<Role> findRolesByIds(List<Integer> roleIds) {
-        return roleRepositori.findAllByIdIn(roleIds);
-    }
-
-
 
     //UserDetailsService
     @Override

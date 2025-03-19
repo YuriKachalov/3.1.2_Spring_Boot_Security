@@ -7,7 +7,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.List;
 
 public interface UserService {
-
     //    удаляем user
     void deleteUser(int id);
 
@@ -20,14 +19,6 @@ public interface UserService {
     User getUserId(Integer id);
 
     User getUserByName(String userName);
-
-    //методы для Role
-    List<Role> listRoles();
-
-    public Role saveRole(Role role);
-
-    public List<Role> findRolesByIds(List<Integer> roleIds);
 }
-//    Role getRoleId(List <Integer> roles);
-//Role getRoleByName(String userName);
+
 
